@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+    </head>
+    <title >
+      test_drag
+    </title>
+    <h1>
+      Drag&DropTest
+    </h1>
+    listをドラッグ
+    <!-- ドラッグされる側 -->
+    <ul>
+      <li draggable="true">
+        サトロール
+      </li>
+      <li draggable="true">
+        サスーン
+      </li>
+      <li draggable="true">
+        神スーン
+      </li>
+    </ul>
+
+    ここにドロップ
+    <!-- ドロップされる側 -->
+    <div id="drophere" style="height:300px; border:solid 1px #DDD;" >Drop Here</div>
+
+    <script>
+      //drog領域
+      var elements = document.getElementsByTagName('li');
+
+      for(var i = 0; i < elements.length;i++){
+        //ドラッグ時にdataTransferにデータセット
+        elements[i].ondragstart = function(e){
+          //セットするデータにあわせてMIMETYPEを指定
+          //テキストデータセット
+          e.dataTransfer.setData('text/plain',e.target.textContent);
+          //HTMLデータをセット
+          e.dataTransfer.setData('text/html',e.target.outerHTML);
+          //URLをセット
+          e.dataTransfer.setData('text/url',document.location.href);
+        };
+      }
+
+      //drop領域
+      var drophere = document.getElementById('drophere');
+
+      //ドラッグ要素がドロップ領域にあるとき
+      drophere.ondragover = function(event){
+        for(var i = 0; i < event.dataTransfer.types.length; i++){
+          if(event.dataTransfer.types[i] === 'text/plain'){
+            //ブラウザのデフォルト動作をキャンセル
+            event.preventDefault();
+            break;
+          }
+        }
+      };
+
+      //ドラッグ要素がドロップ領域にドロップされたとき
+      drophere.ondrop = function(event){
+        //ブラウザのデフォルト動作をキャンセル
+        event.preventDefault();
+
+        //ドラッグされたデータを取得
+        var yourName = event.dataTransfer.getData('text/plain');
+        alert('Hello,' + yourName + '!' );
+      };
+
+    </script>
+
+  </body>
+
+</html>
+

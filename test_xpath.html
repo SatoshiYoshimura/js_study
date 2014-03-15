@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title>Test Template</title>
+  </head>
+  <body>
+    <div id="main">
+      <p class="content">
+        <a class="link" href="http://example.com/">1st link</a>
+      </p>
+      <p class="dummy"></p>
+      <p class="content">
+        <a href="http://example.com/" >2nd link</a>
+      </p>
+      <p class="content">
+        <a href="http://foobar.example.com/">3rd link</a>
+        <a href="http://example.com/">4th link</a>
+      </p>
+      <a href="http://example.com/">5th link</a>
+    </div>
+  </body>
+  <script>
+//    var result = document.evaluate(
+//      '//div[@id="main"]/p[contains(@class,"content")][3]/a[starts-with(@href,"http://example.com")]',
+//      document,
+//      null,
+//      XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+//      null
+//    );
+//    alert(result.snapshotLength);
+//    var elem = result.snapshotItem(0);
+//    alert(elem.innerHTML);
+    var iterator = document.evaluate(
+      '//div[@id="main"]/p',
+      document,
+      null,
+      XPathResult.ORDERED_NODE_ITERATOR_TYPE,
+      null
+    );
+
+    //イテレーター
+    var newParagraph = document.createElement('p');
+    document.getElementById('main').appendChild(newParagraph);
+    newParagraph.appendChild(document.createTextNode('This is a new paragraph'));
+    try{
+      node = iterator.iterateNext();
+    } catch (e){
+      console.log(e);
+    }
+
+    var snapshot = document.evaluate(
+      '//div[@id="main"]/p',
+      document,
+      null,
+      XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+      null
+    );
+
+    var anotherParagraph = document.createElement('p');
+    document.getElementById('main').appendChild(anotherParagraph);
+    newParagraph.appendChild(document.createTextNode('This is another paragraph.'));
+    for(var i = 0; i < snapshot.snapshotLength; i++)
+    {
+      console.log(snapshot.snapshotItem(i) === anotherParagraph);
+    }
+  </script>
+</html>

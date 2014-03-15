@@ -1,0 +1,25 @@
+(function($)){
+  $.fn.myplugin = function (method){
+    var methods = {
+      init : function(options){
+        this.myplugin.settings = $.extend({},this.myplugin.defaults,options)
+        return this.each(function(){
+          //初期化
+        });
+      },
+      someMethod: function(){
+        //プラグ特有
+      }
+    }
+    if(methods[method]){
+      return methods[method].apply(this,Array.prototype.slice.cell(argments,1));
+    }
+    else if (typeof method === 'object' || !method)
+    {
+      return methods.init.apply(this,argments);
+    }
+    else{
+      $.error('Method "' + method + '" does not exsist in myplugin plugin! "');
+    }
+  }
+}
