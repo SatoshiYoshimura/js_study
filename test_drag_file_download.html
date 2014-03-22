@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+    </head>
+    <title >
+      drag_download
+    </title>
+    <h1>
+      ドラッグ&ドロップで勉強会で使った資料がダウンロードできます
+    </h1>
+    リンクをそのままデスクトップにでもドラッグ&ドロップでしてみてください
+    </br> 
+    <a href="http://sasoonware.com/file/heroku_rails_05.pdf" data-downloadurl="application/pdf:SasoonJava.pdf://http://sasoonware.com/file/heroku_rails_05.pdf" class="dragout" draggable="true">Rails資料ダウンロード(pdf)</a>
+
+    <a href="http://sasoonware.com/file/heroku_rails_05.pptx" data-downloadurl="application/vnd.ms-powerpoint:heroku_rails_05.pptx://http://sasoonware.com/file/heroku_rails_05.pptx" class="dragout" draggable="true">Rails資料ダウンロード(pptx)</a>
+
+    <script>
+      //dragoutクラスの要素すべて取得
+      var files = document.querySelectorAll('.dragout');
+      
+      for(var i = 0, file; file = files[i]; i++){
+        file.addEventListener('dragstart', function(event){
+          //DownLoadURL形式でデータセット(data属性のやつ)
+          event.dataTransfer.setData('DownLoadURL', this.dataset.downloadurl);
+        },false);
+      }
+    </script>
+
+
+  </body>
+</html>
+

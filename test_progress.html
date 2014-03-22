@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+    </head>
+    <title >
+      test_progress
+    </title>
+    <h1>
+      ファイル読み込み時にプログレスバーを表示
+    </h1>
+
+    <div id="progWrap" style="width:200px; height:30px; background:gray;">
+      <div id="progBar" style="width:0; height:30px; background:green;"></div>
+    </div>
+
+    File選択
+    <input type="file" accept="text/*" id="selectFile">
+
+    <script>
+      document.getElementById('selectFile').onchange = function(event){
+        var file = event.target.files[0];
+      }
+
+      var progBar = document.getElementById('progBar');
+      var progWrap = document.getElementById('progWrap');
+
+      function readFile(file){
+        var reader = new FileReader();
+        reader.onprogress = function(event){
+          //ファイル長さ計算可能場合
+          if(event.lengthComputable){
+            //進捗を計算してプログレスバーの幅を更新
+            var loaded = (event.loaded / event.total);
+            progBar.style.width = progWrap.offsetWidth * loaded + 'px';
+          }
+        };
+        reader.readAsText(file);
+      }
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+    <title >
+      test_dataurl
+    </title>
+  </head>
+  <body>
+    ドロップされた imageを背景画像にします
+    <h1>
+      dataurltest
+    </h1>
+    <script>
+      document.body.ondragover = function(event){
+        //dropを有効
+        event.preventDefault();
+      };
+
+      document.body.ondrop = function(event){
+        event.preventDefault();
+
+        //ドラッグされたファイルのFIleオブジェクト取得
+        var file = event.dataTransfer.files[0];
+
+        //ドラッグされたファイルをdataURL形式で読み込む
+  
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function(){
+          //data URlを取得
+         var dataURL = reader.result;
+         //dataURLを背景に設定
+         document.body.style.background = 'url(' + dataURL + ')';
+
+         //dataurlURLをlocalStrageに保存
+         localStorage.background = dataURL;
+        }
+      }
+
+      window.onload = function(){
+        if(localStorage.background){
+          document.body.style.background = 'url(' + localStorage.background + ')';
+        }
+      };
+
+    </script>
+  </body>
+</html>
+

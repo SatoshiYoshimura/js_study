@@ -50,7 +50,9 @@
 
       //ドラッグ要素がドロップ領域にあるとき
       drophere.ondragover = function(event){
+        //datatransfer内をまわす
         for(var i = 0; i < event.dataTransfer.types.length; i++){
+          //テキストだった場合
           if(event.dataTransfer.types[i] === 'text/plain'){
             //ブラウザのデフォルト動作をキャンセル
             event.preventDefault();

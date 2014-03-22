@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="http:////ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <div class="foo">foo</div>
+    <div class="bar">bar</div>
+    <div class="baz">baz</div>
+
+    <script>
+      localStorage.setItem('foo','bar');
+      localStorage.foo  = 'bar';
+      localStorage['foo'] = 'bar';
+
+      var data = localStorage.getItem('foo');
+      console.log(data);
+      var data = localStorage.foo;
+      console.log(data);
+      var data = localStorage['foo'];
+      console.log(data);
+
+      //任意のオブジェクト
+      var obj = {x:1 , y:2};
+  
+      //JSONもじれつに変換してほゾン
+      localStorage.foo = JSON.stringify(obj);
+
+      //JSON文字列をオブジェクトに復元
+      var obj2  = JSON.parse(localStorage.foo);
+
+      console.log(obj2);
+
+      //削除
+      console.log(localStorage.foo);
+      delete localStorage.foo;
+      console.log(localStorage.foo);
+      localStorage.removeItem('foo');
+      console.log(localStorage.foo);
+
+      //indexedb
+      var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB;
+      //接続
+
+
+    </script>
+
+  </body>
+
+</html>

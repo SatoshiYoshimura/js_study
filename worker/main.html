@@ -1,0 +1,24 @@
+<!doctype html>
+<input type="text" id="textbox">
+<div id="results"></div>
+<script>
+  //ワーカを生成
+  var worker = new Worker('worker.js'),
+    textbox = document.getElementById('textbox');
+    results = document.getElementById('results');
+
+    //ワーカから検索結果を受信
+    worker.onmessage = function(event){
+      results.innerHTML = event.data;
+    };
+
+    //テキストボックスの内容をワーカに送信
+    textbox.onkeyup = function(event){
+      worker.postMessage(textbox.value);
+      results.innerHTML = '';
+    };
+</script>
+
+
+
+

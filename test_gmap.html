@@ -1,0 +1,31 @@
+<body onload="initialize()">
+  <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript">
+    function initialize()
+    {
+      var latlng = new google.maps.LatLng(35.642722, 139.7291455);
+      var myOptions = {
+        zoom: 8,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+
+      google.maps.event.addListener(map, 'click', function(event){
+        var marker = new google.maps.Marker({
+          position: event.latlng,
+            map: map
+        });
+
+        google.maps.event.addListener(marker,'click',function(event){
+          marker.setMap(null);
+        });
+      });
+
+    }
+  </script>
+  <div id="map_canvas" style="width:100%; height:100%;" ></div>
+</body>
+
+
+

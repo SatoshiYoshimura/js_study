@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="http:////ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <div class="foo">foo</div>
+    <div class="bar">bar</div>
+    <div class="baz">baz</div>
+
+    <script>
+
+      //indexedb
+      var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB;
+      //接続
+      var db = null;
+      var request = indexedDB.open('testdb');
+
+      //接続成功
+      request.onsuccess = function(event){
+        //データベースをグローバル変数dbから参照可能にする
+        db = event.target.result;
+        console.log(db);
+      };
+
+      //データベースに接続失敗
+      request.onerror = function(event){
+        alert('データベースの接続に失敗しました');
+      };
+
+      //DBのバージョンを変更する
+      var request = db.setVersion('1.0');
+
+      request.onsuccess = function(event) {
+        //オブジェクトストア作成
+        var store = db.createObjectStore('books',{
+          //全カラムが_id持っているイメージ
+          KeyPath: '_id',
+          //_idはA.I
+          autoIncrement: true
+        });
+      };
+
+      var IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction;
+
+      //データ追加のラッパー関数
+      function addData(data){
+        //トランザクションの開始
+        var transaction = db.transaction(['books'], IDBTransaction.READ_WRITE);
+        var request = transaction.objectStore('books').add(data);
+
+        request.onsuccess = function(event){
+          //成功するとキーを返す
+          var key = event.target.result;
+          console.log('success! key -> ', key);
+        };
+      }
+
+      //データ参照のラッパー関数
+      function getData(key){
+        //トランザクションの開始
+        var transaction = db.transaction(['books']);
+        //データの参照
+        var request = transaction.objectStore('books').get(key);
+
+        request.onsuccess = function(event){
+          //成功するとデータを返す
+          var data = event.target.result;
+          console.log('success! data ->', data);          
+        };
+      }
+
+      //データ削除のラッパー関数
+      function deleteData(key){
+        //トランザクション開始
+        var transaction = db.transaction(['books'],IDBTransaction.READ_WRITE);
+        //データ削除
+        var request = transaction.objectStore('books').delete(key);
+
+        request.onsuccess = function(event){
+          console.log('success');
+        };
+      }
+
+    </script>
+
+  </body>
+
+</html>

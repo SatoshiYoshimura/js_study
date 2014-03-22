@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+    </head>
+    <div id="container">
+      <div id="handler" draggable="true">handler</div>
+    </div>
+    <script>
+      var container = document.getElementById('container');
+      handler = document.getElementById('handler');
+
+      //handlerのドラッグ開始
+      handler.ondragstart = function(event){
+        //ドラッグイメージにcontainerのキャプチャ指定
+        event.dataTransfer.addElement(container);
+      };
+    </script>
+  </body>
+</html>
+
